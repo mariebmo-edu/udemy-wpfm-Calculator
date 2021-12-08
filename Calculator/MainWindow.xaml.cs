@@ -58,8 +58,15 @@ namespace Calculator
         }
 
         private void PercentageButton_Click( object sender, RoutedEventArgs e ) {
-            if (double.TryParse( resultLabel.Content.ToString(), out lastNumber )) {
-                lastNumber = lastNumber / 100;
+            
+            double tempNumber;
+
+            if (double.TryParse( resultLabel.Content.ToString(), out tempNumber )) {
+                tempNumber = tempNumber / 100;
+
+                if(lastNumber != 0) {
+                    tempNumber *= lastNumber;
+                }
                 resultLabel.Content = lastNumber.ToString();
             }
         }
@@ -123,6 +130,12 @@ namespace Calculator
             return n1 * n2;
         }
         public static double Divide( double n1, double n2 ) {
+
+            if(n2 == 0) {
+                MessageBox.Show( "Division by 0 is not supported", "Wrong Operation", MessageBoxButton.OK, MessageBoxImage.Error );
+                return 0;
+            }
+
             return n1 / n2;
         }
     }
